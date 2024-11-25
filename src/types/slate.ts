@@ -4,6 +4,7 @@ import { ReactEditor } from "slate-react";
 export type CustomElement = {
   type: string;
   children: CustomText[];
+  align?: "left" | "center" | "right";
 };
 
 export type CustomText = {

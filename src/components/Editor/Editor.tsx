@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, CSSProperties } from "react";
-import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
+import { Slate, Editable, withReact, RenderLeafProps, RenderElementProps } from "slate-react";
 import { createEditor, Descendant } from "slate";
 import { processPlaceholders } from "../../utils/placeholder";
 import { Toolbar } from "./Toolbar/Toolbar";
@@ -62,13 +62,25 @@ const Editor = ({ content, onChange, fonts }: EditorProps) => {
     );
   };
 
+  const renderElement = ({ attributes, children, element }: RenderElementProps) => {
+    const style: CSSProperties = {
+      textAlign: element.align || "left",
+    };
+
+    return (
+      <div style={style} {...attributes}>
+        {children}
+      </div>
+    );
+  };
+
   return (
     <EditorWrapper>
       <EditorContainer>
         <Slate editor={editor} value={value} onChange={handleChange}>
           <Toolbar fonts={fonts} />
           <EditorContent>
-            <Editable renderLeaf={renderLeaf} />
+            <Editable renderLeaf={renderLeaf} renderElement={renderElement} />
           </EditorContent>
         </Slate>
       </EditorContainer>
