@@ -1,7 +1,8 @@
 import { saveSlateToDocx } from "../../utils/docxHelper";
 import { FileButton } from "./styles";
+import { CustomElement } from "../../types/slate";
 
-const FileSaver = ({ content }: { content: any }) => {
+const FileSaver = ({ content }: { content?: CustomElement[] }) => {
   const handleSave = async () => {
     if (!content) {
       alert("Não há conteúdo para salvar!");

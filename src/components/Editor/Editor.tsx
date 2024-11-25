@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
-import { Slate, Editable, withReact } from "slate-react";
+import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor, Descendant } from "slate";
 import { processPlaceholders } from "../../utils/placeholder";
 import { Toolbar } from "./Toolbar/Toolbar";
 import { EditorContainer, EditorContent, EditorWrapper } from "./styles";
+import { CustomElement } from "../../types/slate";
 
 interface EditorProps {
-  content?: Descendant[];
-  onChange?: (value: Descendant[]) => void;
+  content?: CustomElement[];
+  onChange?: (value: CustomElement[]) => void;
 }
 
 const Editor = ({ content, onChange }: EditorProps) => {
@@ -22,18 +23,18 @@ const Editor = ({ content, onChange }: EditorProps) => {
   useEffect(() => {
     if (content) {
       console.log("Editor recebendo novo conteúdo:", content);
-      editor.children = content;
+      editor.children = content as Descendant[];
       editor.onChange();
-      setValue(content);
+      setValue(content as Descendant[]);
     }
   }, [content, editor]);
 
   const handleChange = (newValue: Descendant[]) => {
     setValue(newValue);
-    onChange?.(newValue);
+    onChange?.(newValue as CustomElement[]);
   };
 
-  const renderLeaf = ({ attributes, children, leaf }: any) => {
+  const renderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     let processedText = children;
     if (typeof children === "string") {
       processedText = processPlaceholders(children);

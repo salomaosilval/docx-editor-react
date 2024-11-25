@@ -1,13 +1,9 @@
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { Text } from "slate";
 import mammoth from "mammoth";
+import { CustomElement } from "../types/slate";
 
-interface CustomElement {
-  type: string;
-  children: (CustomElement | Text)[];
-}
-
-export const convertDocxToSlate = async (file: File): Promise<any> => {
+export const convertDocxToSlate = async (file: File): Promise<CustomElement[]> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.convertToHtml({
@@ -22,7 +18,7 @@ export const convertDocxToSlate = async (file: File): Promise<any> => {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
-    const blocks: any[] = [];
+    const blocks: CustomElement[] = [];
 
     const elements = Array.from(doc.body.children);
     elements.forEach((element) => {

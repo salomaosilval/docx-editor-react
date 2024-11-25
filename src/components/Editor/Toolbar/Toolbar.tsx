@@ -1,5 +1,5 @@
 import { useSlate } from "slate-react";
-import { Editor, Transforms, Text } from "slate";
+import { Editor, Transforms, Text, Node } from "slate";
 import { ToolbarContainer, ToolbarButton } from "./styles";
 
 type Format = "bold" | "italic" | "underline";
@@ -14,7 +14,7 @@ export const Toolbar = () => {
 
   const isFormatActive = (editor: Editor, format: Format) => {
     const [match] = Editor.nodes(editor, {
-      match: (n: any) => n[format] === true,
+      match: (n: Node) => Text.isText(n) && n[format] === true,
       universal: true,
     });
     return !!match;

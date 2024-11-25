@@ -1,8 +1,9 @@
 import { ChangeEvent } from "react";
 import { convertDocxToSlate } from "../../utils/docxHelper";
 import { FileInput, FileLabel } from "./styles";
+import { CustomElement } from "../../types/slate";
 
-const FileUploader = ({ onLoad }: { onLoad: (content: any) => void }) => {
+const FileUploader = ({ onLoad }: { onLoad: (content: CustomElement[]) => void }) => {
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
