@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/webfontloader": "^1.6.38",
     "docx": "^9.0.3",
     "lodash": "^4.17.21",
     "mammoth": "^1.8.0",
@@ -17,7 +18,8 @@
     "react-dom": "^18.3.1",
     "slate": "0.94.0",
     "slate-react": "0.94.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

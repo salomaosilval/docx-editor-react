@@ -1,5 +1,4 @@
 import { Document, Packer, Paragraph, TextRun } from "docx";
-import { Text } from "slate";
 import mammoth from "mammoth";
 import { CustomElement } from "../types/slate";
 
@@ -50,13 +49,12 @@ export const convertDocxToSlate = async (file: File): Promise<CustomElement[]> =
 export const saveSlateToDocx = async (content: CustomElement[]): Promise<void> => {
   const paragraphs = content.map((node) => {
     const runs = node.children.map((child) => {
-      if (!Text.isText(child)) return new TextRun({ text: "" });
-
       return new TextRun({
         text: child.text,
         bold: child.bold || false,
         italics: child.italic || false,
         underline: child.underline ? { type: "single" } : undefined,
+        font: child.fontFamily?.split(",")[0] || "Arial",
       });
     });
 

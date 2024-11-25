@@ -23,3 +23,27 @@ export const ToolbarButton = styled.button<{ active?: boolean }>`
     color: ${({ theme }) => theme.colors.surface};
   }
 `;
+
+export const StyledSelect = styled.select`
+  padding: ${({ theme }) => theme.spacing.sm};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background: transparent;
+  cursor: pointer;
+  min-width: 200px;
+  height: 35px;
+
+  optgroup {
+    font-weight: bold;
+    padding: 8px 0;
+  }
+
+  option {
+    padding: 8px;
+    font-weight: normal;
+  }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+  }
+`;

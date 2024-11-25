@@ -1,10 +1,12 @@
 import { useSlate } from "slate-react";
 import { Editor, Transforms, Text, Node } from "slate";
 import { ToolbarContainer, ToolbarButton } from "./styles";
+import { FontSelect } from "./FontSelect";
+import { FontGroup } from "../../../utils/fonts";
 
 type Format = "bold" | "italic" | "underline";
 
-export const Toolbar = () => {
+export const Toolbar = ({ fonts }: { fonts: FontGroup[] }) => {
   const editor = useSlate();
 
   const toggleFormat = (editor: Editor, format: Format) => {
@@ -22,6 +24,7 @@ export const Toolbar = () => {
 
   return (
     <ToolbarContainer>
+      <FontSelect fonts={fonts} />
       <ToolbarButton onClick={() => toggleFormat(editor, "bold")} active={isFormatActive(editor, "bold")}>
         B
       </ToolbarButton>

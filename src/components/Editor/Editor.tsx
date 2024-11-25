@@ -1,17 +1,19 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, CSSProperties } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor, Descendant } from "slate";
 import { processPlaceholders } from "../../utils/placeholder";
 import { Toolbar } from "./Toolbar/Toolbar";
 import { EditorContainer, EditorContent, EditorWrapper } from "./styles";
 import { CustomElement } from "../../types/slate";
+import { FontGroup } from "../../utils/fonts";
 
 interface EditorProps {
   content?: CustomElement[];
   onChange?: (value: CustomElement[]) => void;
+  fonts: FontGroup[];
 }
 
-const Editor = ({ content, onChange }: EditorProps) => {
+const Editor = ({ content, onChange, fonts }: EditorProps) => {
   const editor = useMemo(() => withReact(createEditor()), []);
   const [value, setValue] = useState<Descendant[]>([
     {
@@ -22,7 +24,6 @@ const Editor = ({ content, onChange }: EditorProps) => {
 
   useEffect(() => {
     if (content) {
-      console.log("Editor recebendo novo conteúdo:", content);
       editor.children = content as Descendant[];
       editor.onChange();
       setValue(content as Descendant[]);
@@ -40,6 +41,10 @@ const Editor = ({ content, onChange }: EditorProps) => {
       processedText = processPlaceholders(children);
     }
 
+    const style: CSSProperties = {
+      fontFamily: leaf.fontFamily,
+    };
+
     if (leaf.bold) {
       processedText = <strong>{processedText}</strong>;
     }
@@ -50,14 +55,18 @@ const Editor = ({ content, onChange }: EditorProps) => {
       processedText = <u>{processedText}</u>;
     }
 
-    return <span {...attributes}>{processedText}</span>;
+    return (
+      <span style={style} {...attributes}>
+        {processedText}
+      </span>
+    );
   };
 
   return (
     <EditorWrapper>
       <EditorContainer>
         <Slate editor={editor} value={value} onChange={handleChange}>
-          <Toolbar />
+          <Toolbar fonts={fonts} />
           <EditorContent>
             <Editable renderLeaf={renderLeaf} />
           </EditorContent>
