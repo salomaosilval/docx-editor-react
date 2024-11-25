@@ -6,7 +6,7 @@ interface GoogleFontItem {
   category: string;
 }
 
-const GOOGLE_FONTS_API_KEY = "AIzaSyCocl0G4-ZB_EpgieajsrhsOOKDgVD5qZI";
+const GOOGLE_FONTS_API_KEY = import.meta.env.VITE_GOOGLE_FONTS_API_KEY;
 
 export const fetchGoogleFonts = async () => {
   try {
