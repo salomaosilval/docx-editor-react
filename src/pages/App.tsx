@@ -10,6 +10,7 @@ import { AppContainer, AppContent, HeaderContainer, Title } from "./styles";
 import { FileActionsContainer } from "../components/FileActions/styles";
 import { loadGoogleFonts, fetchGoogleFonts } from "../utils/fontLoader";
 import { FontGroup, SYSTEM_FONTS, FontOption } from "../utils/fonts";
+import { getFontsFromCache, saveFontsToCache } from "../utils/fontCache";
 
 const App = () => {
   const [content, setContent] = useState<CustomElement[]>([
@@ -26,9 +27,21 @@ const App = () => {
 
   useEffect(() => {
     const loadFonts = async () => {
+      const cachedFonts = getFontsFromCache();
+
+      if (cachedFonts) {
+        loadGoogleFonts(cachedFonts.map((font: FontOption) => font.label));
+        setAllFonts([
+          { label: "Google Fonts", options: cachedFonts },
+          { label: "Fontes do Sistema", options: SYSTEM_FONTS },
+        ]);
+        return;
+      }
+
       const fonts = await fetchGoogleFonts();
       if (fonts.length > 0) {
         loadGoogleFonts(fonts.map((font: FontOption) => font.label));
+        saveFontsToCache(fonts);
         setAllFonts([
           { label: "Google Fonts", options: fonts },
           { label: "Fontes do Sistema", options: SYSTEM_FONTS },
