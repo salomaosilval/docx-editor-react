@@ -10,7 +10,10 @@ interface CustomElement {
 export const convertDocxToSlate = async (file: File): Promise<any> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const result = await mammoth.convertToHtml({ arrayBuffer });
+    const result = await mammoth.convertToHtml({
+      arrayBuffer,
+    });
+
     const html = result.value;
 
     if (!html) {
@@ -21,20 +24,25 @@ export const convertDocxToSlate = async (file: File): Promise<any> => {
     const doc = parser.parseFromString(html, "text/html");
     const blocks: any[] = [];
 
-    doc.body.childNodes.forEach((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as HTMLElement;
-        const text = element.textContent?.trim();
+    const elements = Array.from(doc.body.children);
+    elements.forEach((element) => {
+      const text = element.textContent?.trim() || "";
+      blocks.push({
+        type: "paragraph",
+        children: [{ text }],
+      });
 
-        if (text) {
-          const block = {
-            type: "paragraph",
-            children: [{ text }],
-          };
-          blocks.push(block);
-        }
+      if (element.tagName.toLowerCase() === "p") {
+        blocks.push({
+          type: "paragraph",
+          children: [{ text: "" }],
+        });
       }
     });
+
+    if (blocks.length > 0 && blocks[blocks.length - 1].children[0].text === "") {
+      blocks.pop();
+    }
 
     return blocks.length ? blocks : [{ type: "paragraph", children: [{ text: "" }] }];
   } catch (error) {

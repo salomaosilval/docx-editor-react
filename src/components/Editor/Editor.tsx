@@ -23,6 +23,7 @@ const Editor = ({ content, onChange }: EditorProps) => {
     if (content) {
       console.log("Editor recebendo novo conteúdo:", content);
       editor.children = content;
+      editor.onChange();
       setValue(content);
     }
   }, [content, editor]);
