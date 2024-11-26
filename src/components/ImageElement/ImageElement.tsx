@@ -38,21 +38,23 @@ export const ImageElement = ({ attributes, children, element }: RenderElementPro
   );
 
   return (
-    <div {...attributes}>
-      <ImageContainer contentEditable={false}>
-        <ResizableImage
-          src={element.url}
-          alt="Imagem inserida"
-          isResizing={isResizing}
-          draggable={false}
-          onDragStart={(e) => e.preventDefault()}
-          style={{
-            width: element.width || "auto",
-            height: element.height || "auto",
-          }}
-        />
-        <ResizeHandle onMouseDown={handleMouseDown} />
-      </ImageContainer>
+    <div {...attributes} style={{ textAlign: element.align || "left" }}>
+      <div contentEditable={false}>
+        <ImageContainer>
+          <ResizableImage
+            src={element.url}
+            alt="Imagem inserida"
+            isResizing={isResizing}
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
+            style={{
+              width: element.width || "auto",
+              height: element.height || "auto",
+            }}
+          />
+          <ResizeHandle onMouseDown={handleMouseDown} />
+        </ImageContainer>
+      </div>
       {children}
     </div>
   );

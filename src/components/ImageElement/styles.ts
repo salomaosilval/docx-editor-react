@@ -29,12 +29,13 @@ export const ResizableImage = styled.img<{ isResizing?: boolean }>`
 
 export const ResizeHandle = styled.div`
   position: absolute;
-  right: -6px;
-  bottom: -6px;
+  right: 0;
+  bottom: 0;
   width: 12px;
   height: 12px;
   background-color: ${({ theme }) => theme.colors.primary};
   cursor: se-resize;
   border-radius: 50%;
   z-index: 1;
+  transform: translate(50%, 50%);
 `;

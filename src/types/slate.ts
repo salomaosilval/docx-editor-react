@@ -7,7 +7,7 @@ export type CustomElement = {
   align?: "left" | "center" | "right";
   url?: string;
   width?: number;
-  height?: number | "auto";
+  height?: string | number;
 };
 
 export type CustomText = {
