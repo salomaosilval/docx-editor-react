@@ -6,6 +6,8 @@ export type CustomElement = {
   children: CustomText[];
   align?: "left" | "center" | "right";
   url?: string;
+  width?: number;
+  height?: number | "auto";
 };
 
 export type CustomText = {

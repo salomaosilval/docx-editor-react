@@ -13,6 +13,8 @@ export const ImageButton = () => {
     const image = {
       type: "image",
       url,
+      width: 50,
+      height: "auto" as const,
       children: [{ text: "" }],
     };
 

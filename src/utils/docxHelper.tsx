@@ -62,8 +62,8 @@ export const saveSlateToDocx = async (content: CustomElement[]): Promise<void> =
               new ImageRun({
                 data: buffer,
                 transformation: {
-                  width: 50,
-                  height: 50,
+                  width: typeof node.width === "number" ? node.width : 400,
+                  height: typeof node.height === "number" ? node.height : 300,
                 },
                 type: "png",
               }),
