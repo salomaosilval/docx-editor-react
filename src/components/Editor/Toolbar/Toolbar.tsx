@@ -5,6 +5,7 @@ import { FontSelect } from "./FontSelect";
 import { FontGroup } from "../../../utils/fonts";
 import { AiOutlineAlignLeft, AiOutlineAlignCenter, AiOutlineAlignRight } from "react-icons/ai";
 import { ImageButton } from "./ImageButton";
+import { FontSizeButton } from "./FontSizeButton";
 
 type Format = "bold" | "italic" | "underline";
 type Alignment = "left" | "center" | "right";
@@ -40,6 +41,7 @@ export const Toolbar = ({ fonts }: { fonts: FontGroup[] }) => {
   return (
     <ToolbarContainer>
       <FontSelect fonts={fonts} />
+      <FontSizeButton />
       <ToolbarButton onClick={() => toggleFormat(editor, "bold")} active={isFormatActive(editor, "bold")}>
         B
       </ToolbarButton>
