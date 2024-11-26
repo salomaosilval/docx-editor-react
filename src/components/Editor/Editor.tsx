@@ -45,6 +45,7 @@ const Editor = ({ content, onChange, fonts }: EditorProps) => {
     const style: CSSProperties = {
       fontFamily: leaf.fontFamily,
       fontSize: leaf.fontSize ? `${leaf.fontSize}px` : undefined,
+      color: leaf.color,
     };
 
     if (leaf.bold) {

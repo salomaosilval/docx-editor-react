@@ -17,6 +17,7 @@ export type CustomText = {
   underline?: boolean;
   fontFamily?: string;
   fontSize?: number;
+  color?: string;
 };
 
 declare module "slate" {
