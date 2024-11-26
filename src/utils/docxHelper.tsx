@@ -1,4 +1,4 @@
-import { Document, Packer, Paragraph, TextRun } from "docx";
+import { Document, Packer, Paragraph, TextRun, ImageRun } from "docx";
 import mammoth from "mammoth";
 import { CustomElement } from "../types/slate";
 
@@ -47,25 +47,52 @@ export const convertDocxToSlate = async (file: File): Promise<CustomElement[]> =
 };
 
 export const saveSlateToDocx = async (content: CustomElement[]): Promise<void> => {
-  const paragraphs = content.map((node) => {
-    const runs = node.children.map((child) => {
-      return new TextRun({
-        text: child.text,
-        bold: child.bold || false,
-        italics: child.italic || false,
-        underline: child.underline ? { type: "single" } : undefined,
-        font: child.fontFamily?.split(",")[0] || "Arial",
-      });
-    });
+  const children = [];
 
-    return new Paragraph({ children: runs });
-  });
+  for (const node of content) {
+    if (node.type === "image" && node.url) {
+      try {
+        const response = await fetch(node.url);
+        const blob = await response.blob();
+        const buffer = await blob.arrayBuffer();
+
+        children.push(
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: buffer,
+                transformation: {
+                  width: 50,
+                  height: 50,
+                },
+                type: "png",
+              }),
+            ],
+          })
+        );
+      } catch (error) {
+        console.error("Erro ao processar imagem:", error);
+      }
+    } else {
+      const runs = node.children.map((child) => {
+        return new TextRun({
+          text: child.text,
+          bold: child.bold || false,
+          italics: child.italic || false,
+          underline: child.underline ? { type: "single" } : undefined,
+          font: child.fontFamily?.split(",")[0] || "Arial",
+        });
+      });
+
+      children.push(new Paragraph({ children: runs }));
+    }
+  }
 
   const doc = new Document({
     sections: [
       {
         properties: {},
-        children: paragraphs,
+        children,
       },
     ],
   });

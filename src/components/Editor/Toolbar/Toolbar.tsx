@@ -4,6 +4,7 @@ import { ToolbarContainer, ToolbarButton } from "./styles";
 import { FontSelect } from "./FontSelect";
 import { FontGroup } from "../../../utils/fonts";
 import { AiOutlineAlignLeft, AiOutlineAlignCenter, AiOutlineAlignRight } from "react-icons/ai";
+import { ImageButton } from "./ImageButton";
 
 type Format = "bold" | "italic" | "underline";
 type Alignment = "left" | "center" | "right";
@@ -57,6 +58,7 @@ export const Toolbar = ({ fonts }: { fonts: FontGroup[] }) => {
       <ToolbarButton onClick={() => toggleAlign(editor, "right")} active={isAlignActive(editor, "right")}>
         <AiOutlineAlignRight />
       </ToolbarButton>
+      <ImageButton />
     </ToolbarContainer>
   );
 };

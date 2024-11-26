@@ -5,6 +5,7 @@ export type CustomElement = {
   type: string;
   children: CustomText[];
   align?: "left" | "center" | "right";
+  url?: string;
 };
 
 export type CustomText = {

@@ -6,6 +6,7 @@ import { Toolbar } from "./Toolbar/Toolbar";
 import { EditorContainer, EditorContent, EditorWrapper } from "./styles";
 import { CustomElement } from "../../types/slate";
 import { FontGroup } from "../../utils/fonts";
+import { ImageElement } from "../ImageElement/ImageElement";
 
 interface EditorProps {
   content?: CustomElement[];
@@ -63,6 +64,10 @@ const Editor = ({ content, onChange, fonts }: EditorProps) => {
   };
 
   const renderElement = ({ attributes, children, element }: RenderElementProps) => {
+    if (element.type === "image") {
+      return <ImageElement attributes={attributes} children={children} element={element} />;
+    }
+
     const style: CSSProperties = {
       textAlign: element.align || "left",
     };
