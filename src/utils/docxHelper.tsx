@@ -82,6 +82,7 @@ export const saveSlateToDocx = async (content: CustomElement[]): Promise<void> =
           underline: child.underline ? { type: "single" } : undefined,
           font: child.fontFamily?.split(",")[0] || "Arial",
           size: (child.fontSize || 16) * 2,
+          color: child.color || "000000",
         });
       });
 
